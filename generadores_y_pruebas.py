@@ -281,10 +281,73 @@ def pruebaSerie(datos):
     print("Grados de libertad: ",gl)
     print("chi-critico = ", tabla[gl-1])
     if suma <= tabla[gl-1] : print("El generador en bueno en cuanto a independencia") 
-    else: print("El generador no es bueno porque el chi-cuadrado es mayor al chi-critico")
+    else: print("El generador no es bueno porque el chi-calculado es mayor al chi-critico")
   
-            
+def pruebasPoker(datos):
+    # datos = [0.959, 0.972, 0.178, 0.427, 0.299, 0.425, 0.372, 0.015, 0.153, 0.316, 0.087, 0.615, 0.188, 0.239, 0.808, 0.444, 0.084, 0.166, 0.199, 0.182, 0.532, 0.904, 0.216,0.466,0.317, 0.713, 0.051, 0.229, 0.577, 0.299, 0.185, 0.222, 0.296, 0.854, 0.283, 0.324, 0.913, 0.158, 0.954, 0.582]   
     
+    tabla = [3.841, 5.991, 7.815, 9.488, 11.070, 12.592, 14.067, 15.507, 16.919, 18.307, 19.675, 21.026, 22.362, 23.685, 24.996, 26.296, 27.587, 28.869, 30.144, 31.410, 32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773]
+    
+    k = 3
+    n = len(datos)
+    gl = k - 1
+    fO = []
+    fE = []
+    probabilidad = []
+    probabilidad.append(0.01)
+    probabilidad.append(0.27)
+    probabilidad.append(0.72)
+    
+    for num in probabilidad:
+        valor = num * n
+        fE.append(valor)
+    
+    tercia = 0
+    par = 0
+    pachuca = 0
+    for num in datos:
+        primer_digito = int(num * 10) % 10
+        segundo_digito = int(num * 100) % 10
+        tercer_digito = int(num * 1000) % 10
+        
+        if primer_digito == segundo_digito == tercer_digito:
+            tercia += 1
+        
+        par1 = (primer_digito == segundo_digito)
+        par2 = (primer_digito == tercer_digito)
+        par3 = (segundo_digito == tercer_digito)
+        if  (par1 and (primer_digito != tercer_digito)) or (par2 and (primer_digito != segundo_digito)) or (par3 and (segundo_digito != primer_digito)):
+            par += 1
+            
+        if (primer_digito != segundo_digito) and (primer_digito != tercer_digito) and (segundo_digito != tercer_digito):
+            pachuca += 1
+    fO.append(tercia)        
+    fO.append(par)        
+    fO.append(pachuca)
+        
+    #calculado el chi-calculado
+    chi_calculado = []
+    for i in range(len(fO)):
+        valor = (fE[i] - fO[i])**2/fE[i]
+        chi_calculado.append(valor)
+    
+    
+    #suma del chi-calculado
+    suma = sum(chi_calculado)
+        
+    print("Frecuencia obtenida: ",fO) 
+    print("Frecuencia esperada",fE)            
+    print("chi-calculado: ",chi_calculado)
+    print("Grados de libertad: ",gl)
+    print("Valor de la suma chi calculado: ",suma)
+    print("chi-critico = ", tabla[gl-1])
+    if suma <= tabla[gl-1] : print("El generador en bueno en cuanto a independencia") 
+    else: print("El generador no es bueno porque el chi-calculado es mayor al chi-critico")
+            
+        
+    
+            
+
 
 def generatorLineal(x0,a,c,m, cantDatos):
 
@@ -325,7 +388,8 @@ def generatorLineal(x0,a,c,m, cantDatos):
     # datos_rn = datos_rn[:cantDatos]
     # pruebaChiCuadrado(cantDatos, 0.1, datos_rn)
     # pruebaKolmogorovSmirnov(cantDatos, 0.2, datos_rn)
-    pruebaSerie(datos_rn)
+    # pruebaSerie(datos_rn)
+    pruebasPoker(datos_rn)
     
 
 def generadorEstandarMinimo(x0, a, m):
@@ -358,7 +422,7 @@ def generadorEstandarMinimo(x0, a, m):
      
 
 print("Generador lineal")
-generatorLineal(5, 5, 5, 32, 30)
+# generatorLineal(5, 5, 5, 32, 30)
 # generatorLineal(5, 106, 1283, 6075, 1000)
 # generatorLineal(5, 255, 100, 1032, 1000)
 
