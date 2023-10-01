@@ -183,7 +183,7 @@ def pruebaIndependencia_corridas(datos):
         print("No hay evidencia para rechazar la hipotesis de independencia")
 
 def pruebaSerie(datos):
-    # datos = [0.22461, 0.16079, 0.04036, 0.00115, 0.90845, 0.4653, 0.57244, 0.56637, 0.33142, 0.31993, 0.45972, 0.03052, 0.3749, 0.00066, 0.7603, 0.85726, 0.5032, 0.69631, 0.27826, 0.31928, 0.79147, 0.55291, 0.4087, 0.25956, 0.54569, 0.68597, 0.9219, 0.34651, 0.23954, 0.14225, 0.29237, 0.77293, 0.63084, 0.07777, 0.57014, 0.78343, 0.68368, 0.33864, 0.6064, 0.78244, 0.81772, 0.0443, 0.78031, 0.69844, 0.7114, 0.52108, 0.99163, 0.48105, 0.63905, 0.03888]
+    datos = [0.22461, 0.16079, 0.04036, 0.00115, 0.90845, 0.4653, 0.57244, 0.56637, 0.33142, 0.31993, 0.45972, 0.03052, 0.3749, 0.00066, 0.7603, 0.85726, 0.5032, 0.69631, 0.27826, 0.31928, 0.79147, 0.55291, 0.4087, 0.25956, 0.54569, 0.68597, 0.9219, 0.34651, 0.23954, 0.14225, 0.29237, 0.77293, 0.63084, 0.07777, 0.57014, 0.78343, 0.68368, 0.33864, 0.6064, 0.78244, 0.81772, 0.0443, 0.78031, 0.69844, 0.7114, 0.52108, 0.99163, 0.48105, 0.63905, 0.03888]
     
     tabla = [3.841, 5.991, 7.815, 9.488, 11.070, 12.592, 14.067, 15.507, 16.919, 18.307, 19.675, 21.026, 22.362, 23.685, 24.996, 26.296, 27.587, 28.869, 30.144, 31.410, 32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773]
     
@@ -272,7 +272,9 @@ def pruebaSerie(datos):
     #     if (pares[i][0] >= 0.8 and pares[i][0] < 1) and (pares[i][1] >= 0.6 and pares[i][1] < 0.8): matriz[4][3] += 1 
     #     if (pares[i][0] >= 0.8 and pares[i][0] < 1) and (pares[i][1] >= 0.8 and pares[i][1] < 1): matriz[4][4] += 1 
     
-    print("Matriz con los chi-calculados",matrizChi_cuadrado)
+    print("limites: ", limites)
+    print("Matriz: ",matriz)
+    print("Matriz con los chi-calculados: ",matrizChi_cuadrado)
     print("numero de clases: ", clases)
     print("intervalos para cada dimension: ", intervalos)
     print("probabilidad teorica en cada celda: ", 1/clases)
@@ -283,20 +285,20 @@ def pruebaSerie(datos):
     if suma <= tabla[gl-1] : print("El generador en bueno en cuanto a independencia") 
     else: print("El generador no es bueno porque el chi-calculado es mayor al chi-critico")
   
-def pruebasPoker(datos):
-    # datos = [0.959, 0.972, 0.178, 0.427, 0.299, 0.425, 0.372, 0.015, 0.153, 0.316, 0.087, 0.615, 0.188, 0.239, 0.808, 0.444, 0.084, 0.166, 0.199, 0.182, 0.532, 0.904, 0.216,0.466,0.317, 0.713, 0.051, 0.229, 0.577, 0.299, 0.185, 0.222, 0.296, 0.854, 0.283, 0.324, 0.913, 0.158, 0.954, 0.582]   
+def pruebaPoker3(datos):
+    datos = [0.959, 0.972, 0.178, 0.427, 0.299, 0.425, 0.372, 0.015, 0.153, 0.316, 0.087, 0.615, 0.188, 0.239, 0.808, 0.444, 0.084, 0.166, 0.199, 0.182, 0.532, 0.904, 0.216,0.466,0.317, 0.713, 0.051, 0.229, 0.577, 0.299, 0.185, 0.222, 0.296, 0.854, 0.283, 0.324, 0.913, 0.158, 0.954, 0.582]   
     
-    tabla = [3.841, 5.991, 7.815, 9.488, 11.070, 12.592, 14.067, 15.507, 16.919, 18.307, 19.675, 21.026, 22.362, 23.685, 24.996, 26.296, 27.587, 28.869, 30.144, 31.410, 32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773]
+    tabla = [3.841, 5.991, 7.815, 9.488, 11.070, 12.592]
     
     k = 3
     n = len(datos)
-    gl = k - 1
     fO = []
     fE = []
     probabilidad = []
     probabilidad.append(0.01)
     probabilidad.append(0.27)
     probabilidad.append(0.72)
+    gl = len(probabilidad) - 1
     
     for num in probabilidad:
         valor = num * n
@@ -344,9 +346,228 @@ def pruebasPoker(datos):
     if suma <= tabla[gl-1] : print("El generador en bueno en cuanto a independencia") 
     else: print("El generador no es bueno porque el chi-calculado es mayor al chi-critico")
             
-        
+
+def pruebaPoker5(datos):
+    # datos = [.72484, .48999, .50502, .39528, .36782, .90234, .71890, .61234, .86322, .94134, .99872, .27657, .34565, .02345, .67347, .10987, .25678, .25593, .82345, .12387, .05389, .82474, .59289, .36782, .03991, .10461, .93716, .16894, .98953, .73231]
     
+    tabla = [3.841, 5.991, 7.815, 9.488, 11.070, 12.592]
+    
+    k = 5
+    n = len(datos)
+    fO = []
+    fE = []
+    probabilidad = []
+    probabilidad.append(0.3024)
+    probabilidad.append(0.5040)
+    probabilidad.append(0.1080)
+    probabilidad.append(0.0720)
+    probabilidad.append(0.0090)
+    probabilidad.append(0.0045)
+    probabilidad.append(0.0001)
+    gl = len(probabilidad) - 1
+    
+    for num in probabilidad:
+        valor = num * n
+        fE.append(valor)
+    
+    quintilla = 0
+    poker = 0
+    tercia = 0
+    par = 0
+    dosPares = 0
+    pachuca = 0
+    full = 0
+    for num in datos:
+        primer_digito = int(num * 10) % 10
+        segundo_digito = int(num * 100) % 10
+        tercer_digito = int(num * 1000) % 10
+        cuarto_digito = int(num * 10000) % 10
+        quinto_digito = int(num * 100000) % 10
+        
+        #QUINTILLA, todos iguales
+        if primer_digito == segundo_digito == tercer_digito == cuarto_digito == quinto_digito:
+            quintilla += 1
+        
+        #PACHUCA, todos diferentes
+        if (primer_digito != segundo_digito) and (primer_digito != tercer_digito) and (primer_digito != cuarto_digito) and (primer_digito != quinto_digito):
+            if (segundo_digito != tercer_digito) and (segundo_digito != cuarto_digito) and (segundo_digito != quinto_digito):
+                if (tercer_digito != cuarto_digito) and (tercer_digito != quinto_digito) and (cuarto_digito != quinto_digito):
+                    pachuca += 1
+        
+        #UN PAR, 2 iguales 3 diferentes
+        par1 = (primer_digito == segundo_digito)
+        par2 = (primer_digito == tercer_digito)
+        par3 = (primer_digito == cuarto_digito)
+        par4 = (primer_digito == quinto_digito)
+        if (par1 and (primer_digito != tercer_digito) and (primer_digito != cuarto_digito) and (primer_digito != quinto_digito)):
+            if (tercer_digito != cuarto_digito) and (tercer_digito != quinto_digito) and (cuarto_digito != quinto_digito):
+                par += 1
+        if (par2 and (primer_digito != segundo_digito) and (primer_digito != cuarto_digito) and (primer_digito != quinto_digito)):
+            if (segundo_digito != cuarto_digito) and (segundo_digito != quinto_digito) and (cuarto_digito != quinto_digito):
+                par += 1
+        if (par3 and (primer_digito != segundo_digito) and (primer_digito != tercer_digito) and (primer_digito != quinto_digito)):
+            if (segundo_digito != tercer_digito) and (segundo_digito != quinto_digito) and (tercer_digito != quinto_digito):
+                par += 1
+        if (par4 and (primer_digito != segundo_digito) and (primer_digito != tercer_digito) and (primer_digito != cuarto_digito)):
+            if (segundo_digito != tercer_digito) and (segundo_digito != cuarto_digito) and (tercer_digito != cuarto_digito):
+                par += 1
+        
+        par5 = (segundo_digito == tercer_digito)
+        par6 = (segundo_digito == cuarto_digito)
+        par7 = (segundo_digito == quinto_digito)
+        if (par5 and (segundo_digito != primer_digito) and (segundo_digito != cuarto_digito) and (segundo_digito != quinto_digito)):
+            if (primer_digito != cuarto_digito) and (primer_digito != quinto_digito) and (cuarto_digito != quinto_digito):
+                par += 1
+        if (par6 and (segundo_digito != primer_digito) and (segundo_digito != tercer_digito) and (segundo_digito != quinto_digito)):
+           if (primer_digito != tercer_digito) and (primer_digito != quinto_digito) and (tercer_digito != quinto_digito):
+                par += 1
+        if (par7 and (segundo_digito != primer_digito) and (segundo_digito != tercer_digito) and (segundo_digito != cuarto_digito)):
+            if (primer_digito != tercer_digito) and (primer_digito != cuarto_digito) and (tercer_digito != cuarto_digito):
+                par += 1
             
+        par8 = (tercer_digito == cuarto_digito)
+        par9 = (tercer_digito == quinto_digito)
+        if (par8 and (tercer_digito != primer_digito) and (tercer_digito != segundo_digito) and (tercer_digito != quinto_digito)):
+            if (segundo_digito != primer_digito) and (primer_digito != quinto_digito) and (segundo_digito != quinto_digito):
+                par += 1
+        if (par9 and (tercer_digito != primer_digito) and (tercer_digito != segundo_digito) and (tercer_digito != cuarto_digito)):
+            if (segundo_digito != primer_digito) and (primer_digito != tercer_digito) and (tercer_digito != segundo_digito):
+                par += 1
+        
+        par10 = (cuarto_digito == quinto_digito)
+        if (par10 and (cuarto_digito != primer_digito) and (cuarto_digito != segundo_digito) and (cuarto_digito != tercer_digito)):
+            if (segundo_digito != primer_digito) and (primer_digito != tercer_digito) and (segundo_digito != tercer_digito):
+                par += 1
+        
+        #DOS PARES, 2 pares 1 diferente
+        if ((par5 and par10) and (segundo_digito != cuarto_digito)) and (segundo_digito != primer_digito and cuarto_digito != primer_digito):
+            dosPares += 1
+        if ((par6 and par9) and (segundo_digito != tercer_digito)) and (segundo_digito != primer_digito and tercer_digito != primer_digito):
+            dosPares += 1
+        if ((par7 and par8) and (segundo_digito != tercer_digito)) and (segundo_digito != primer_digito and tercer_digito != primer_digito):
+            dosPares += 1
+        
+        if ((par2 and par10) and (primer_digito != cuarto_digito)) and (primer_digito != segundo_digito and cuarto_digito != segundo_digito):
+            dosPares += 1
+        if ((par3 and par9) and (primer_digito != tercer_digito)) and (primer_digito != segundo_digito and tercer_digito != segundo_digito):
+            dosPares += 1
+        if ((par5 and par10) and (primer_digito != tercer_digito)) and (primer_digito != segundo_digito and tercer_digito != segundo_digito):
+            dosPares += 1
+            
+        if ((par3 and par7) and (segundo_digito != cuarto_digito)) and (segundo_digito != tercer_digito and cuarto_digito != tercer_digito):
+            dosPares += 1
+        if ((par1 and par10) and (segundo_digito != cuarto_digito)) and (segundo_digito != tercer_digito and cuarto_digito != tercer_digito):
+            dosPares += 1
+        if ((par4 and par6) and (primer_digito != segundo_digito)) and (primer_digito != tercer_digito and segundo_digito != tercer_digito):
+            dosPares += 1
+            
+        if ((par1 and par9) and (segundo_digito != tercer_digito)) and (segundo_digito != cuarto_digito and tercer_digito != cuarto_digito):
+            dosPares += 1
+        if ((par2 and par7) and (segundo_digito != tercer_digito)) and (segundo_digito != cuarto_digito and tercer_digito != cuarto_digito):
+            dosPares += 1
+        if ((par4 and par5) and (primer_digito != segundo_digito)) and (primer_digito != cuarto_digito and segundo_digito != cuarto_digito):
+            dosPares += 1
+            
+        if ((par2 and par6) and (primer_digito != segundo_digito)) and (primer_digito != quinto_digito and segundo_digito != quinto_digito):
+            dosPares += 1
+        if ((par1 and par8) and (segundo_digito != tercer_digito)) and (segundo_digito != quinto_digito and tercer_digito != quinto_digito):
+            dosPares += 1
+        if ((par3 and par5) and (primer_digito != segundo_digito)) and (primer_digito != quinto_digito and segundo_digito != quinto_digito):
+            dosPares += 1
+            
+        #TERCIA, 3 iguales 2 diferentes
+        igual1 = (tercer_digito == cuarto_digito == quinto_digito)
+        igual2 = (segundo_digito == cuarto_digito == quinto_digito)
+        igual3 = (segundo_digito == tercer_digito == quinto_digito)
+        igual4 = (segundo_digito == tercer_digito == cuarto_digito)
+        igual5 = (primer_digito == cuarto_digito == quinto_digito)
+        igual6 = (primer_digito == tercer_digito == quinto_digito)
+        igual7 = (primer_digito == tercer_digito == cuarto_digito)
+        igual8 = (primer_digito == segundo_digito == quinto_digito)
+        igual9 = (primer_digito == segundo_digito == cuarto_digito)
+        igual10 = (primer_digito == segundo_digito == tercer_digito)
+        if (igual1 and (igual1 != primer_digito and igual1 != segundo_digito)) and primer_digito != segundo_digito:
+            tercia += 1
+        if (igual2 and (igual1 != primer_digito and igual1 != tercer_digito)) and primer_digito != tercer_digito:
+            tercia += 1
+        if (igual3 and (igual1 != primer_digito and igual1 != cuarto_digito)) and primer_digito != cuarto_digito:
+            tercia += 1
+        if (igual4 and (igual1 != primer_digito and igual1 != quinto_digito)) and primer_digito != quinto_digito:
+            tercia += 1
+        if (igual5 and (igual1 != segundo_digito and igual1 != tercer_digito)) and segundo_digito != tercer_digito:
+            tercia += 1
+        if (igual6 and (igual1 != segundo_digito and igual1 != cuarto_digito)) and segundo_digito != cuarto_digito:
+            tercia += 1
+        if (igual7 and (igual1 != segundo_digito and igual1 != quinto_digito)) and segundo_digito != quinto_digito:
+            tercia += 1
+        if (igual8 and (igual1 != tercer_digito and igual1 != cuarto_digito)) and tercer_digito != cuarto_digito:
+            tercia += 1
+        if (igual9 and (igual1 != tercer_digito and igual1 != quinto_digito)) and tercer_digito != quinto_digito:
+            tercia += 1
+        if (igual10 and (igual1 != cuarto_digito and igual1 != quinto_digito)) and cuarto_digito != quinto_digito:
+            tercia += 1
+            
+        #POKER, 4 iguales 1 diferente
+        if (primer_digito == segundo_digito == tercer_digito == cuarto_digito) and primer_digito != quinto_digito:
+            poker += 1
+        if (primer_digito == segundo_digito == tercer_digito == quinto_digito) and primer_digito != cuarto_digito:
+            poker += 1
+        if (primer_digito == segundo_digito == quinto_digito == cuarto_digito) and primer_digito != tercer_digito:
+            poker += 1
+        if (primer_digito == quinto_digito == tercer_digito == cuarto_digito) and primer_digito != segundo_digito:
+            poker += 1
+        if (quinto_digito == segundo_digito == tercer_digito == cuarto_digito) and segundo_digito != primer_digito:
+            poker += 1
+        
+        #FULL, 2 iguales, 3 iguales
+        if (par1 and igual1) and (primer_digito != tercer_digito):
+            full +=1
+        if (par2 and igual2) and (primer_digito != segundo_digito):
+            full +=1
+        if (par3 and igual3) and (primer_digito != segundo_digito):
+            full +=1
+        if (par4 and igual4) and (primer_digito != segundo_digito):
+            full +=1
+        if (par5 and igual5) and (primer_digito != segundo_digito):
+            full +=1
+        if (par6 and igual6) and (primer_digito != segundo_digito):
+            full +=1
+        if (par7 and igual7) and (primer_digito != segundo_digito):
+            full +=1
+        if (par8 and igual8) and (segundo_digito != tercer_digito):
+            full +=1
+        if (par9 and igual9) and (segundo_digito != tercer_digito):
+            full +=1
+        if (par10 and igual10) and (cuarto_digito != tercer_digito):
+            full +=1
+   
+    fO.append(pachuca)
+    fO.append(par)        
+    fO.append(dosPares)
+    fO.append(tercia)
+    fO.append(full)
+    fO.append(poker)
+    fO.append(quintilla)        
+    
+    #calculado el chi-calculado
+    chi_calculado = []
+    for i in range(len(fO)):
+        valor = (fE[i] - fO[i])**2/fE[i]
+        chi_calculado.append(valor)
+    
+    
+    #suma del chi-calculado
+    suma = sum(chi_calculado)
+        
+    print("Frecuencia obtenida: ",fO) 
+    print("Frecuencia esperada",fE)      
+    print("Suma frecuencia esperada (FE): ", sum(fE))      
+    print("chi-calculado: ",chi_calculado)
+    print("Grados de libertad: ",gl)
+    print("Valor de la suma chi calculado: ",suma)
+    print("chi-critico = ", tabla[gl-1])
+    if suma <= tabla[gl-1] : print("El generador en bueno en cuanto a independencia") 
+    else: print("El generador no es bueno porque el chi-calculado es mayor al chi-critico")
 
 
 def generatorLineal(x0,a,c,m, cantDatos):
@@ -385,11 +606,11 @@ def generatorLineal(x0,a,c,m, cantDatos):
     print("------------------------------------------")
     
     #llamado al metodo para hacer la prueba de chi-cuadrado
-    # datos_rn = datos_rn[:cantDatos]
-    # pruebaChiCuadrado(cantDatos, 0.1, datos_rn)
-    # pruebaKolmogorovSmirnov(cantDatos, 0.2, datos_rn)
+    datos_rn = datos_rn[:cantDatos]
+    pruebaChiCuadrado(cantDatos, 0.1, datos_rn)
+    pruebaKolmogorovSmirnov(cantDatos, 0.2, datos_rn)
     # pruebaSerie(datos_rn)
-    pruebasPoker(datos_rn)
+    # pruebaPoker5(datos_rn)
     
 
 def generadorEstandarMinimo(x0, a, m):
@@ -423,7 +644,7 @@ def generadorEstandarMinimo(x0, a, m):
 
 print("Generador lineal")
 # generatorLineal(5, 5, 5, 32, 30)
-# generatorLineal(5, 106, 1283, 6075, 1000)
+# generatorLineal(0, 106, 1283, 6075, 1000)
 # generatorLineal(5, 255, 100, 1032, 1000)
 
 # print("\nGenerador estandar minimo")
